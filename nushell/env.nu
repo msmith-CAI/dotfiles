@@ -3,7 +3,7 @@
 # version = "0.99.1"
 
 def create_left_prompt [] {
-    let dir = match (do --ignore-shell-errors { $env.PWD | path relative-to $nu.home-path }) {
+    let dir = match (do  { $env.PWD | path relative-to $nu.home-path }) {
         null => $env.PWD
         '' => '~'
         $relative_pwd => ([~ $relative_pwd] | path join)
@@ -96,10 +96,10 @@ $env.NU_PLUGIN_DIRS = [
 # path add ($env.CARGO_HOME | path join "bin")
 # path add ($env.HOME | path join ".local" "bin")
 # $env.PATH = ($env.PATH | uniq)
-$env.PATH = ($env.PATH | split row (char esep) | prepend '/Users/matsmith/.cargo/bin')
-$env.PATH = ($env.PATH | split row (char esep) | prepend '/usr/local/bin')
+$env.PATH = ($env.PATH | append '/Program Files/starship/bin')
 
 # To load from a custom file you can use:
 # source ($nu.default-config-dir | path join 'custom.nu')
 
-source '/Users/matsmith/Library/Application Support/nushell/config.nu'
+mkdir ~/.cache/starship
+starship init nu | save -f ~/.cache/starship/init.nu
